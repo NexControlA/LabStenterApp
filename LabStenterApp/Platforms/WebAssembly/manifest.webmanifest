@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "LabStenterApp",
+  "display": "standalone",
+  "name": "LabStenterApp",
+  "short_name": "LabStenterApp",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}

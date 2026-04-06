@@ -1,0 +1,222 @@
+<Page xmlns:hd="using:Uno.UI.HotDesign" xmlns:markup="using:Uno.UI.Markup" x:Name="Root"
+      x:Class="LabStenterApp.Presentation.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:LabStenterApp.Presentation"
+      xmlns:uen="using:Uno.Extensions.Navigation.UI"
+      xmlns:utu="using:Uno.Toolkit.UI"
+      xmlns:um="using:Uno.Material"
+      NavigationCacheMode="Required"
+      Background="{ThemeResource BackgroundBrush}">
+    <Grid Background="{StaticResource BrushBackground}">
+        <SplitView PaneBackground="{StaticResource BrushNavBackground}" OpenPaneLength="200" DisplayMode="Inline"
+                   IsPaneOpen="True">
+            <SplitView.Pane>
+                <StackPanel Orientation="Vertical">
+                    <Button Margin="0,8,0,0" Style="{StaticResource NavButtonStyle}"
+                            Command="{Binding GoToSecondViewCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,0,12,0" FontSize="16" FontFamily="Segoe MDL2 Assets" Text="" />
+                            <TextBlock VerticalAlignment="Center" Text="Dashboard" />
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource NavButtonStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,0,12,0" FontSize="16" FontFamily="Segoe MDL2 Assets" Text="" />
+                            <TextBlock VerticalAlignment="Center" Text="Connection" />
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource NavButtonStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,0,12,0" FontSize="16" FontFamily="Segoe MDL2 Assets" Text="" />
+                            <TextBlock VerticalAlignment="Center" Text="Monitoring" />
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource NavButtonStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,0,12,0" FontSize="16" FontFamily="Segoe MDL2 Assets" Text="" />
+                            <TextBlock VerticalAlignment="Center" Text="Control" />
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource NavButtonStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,0,12,0" FontSize="16" FontFamily="Segoe MDL2 Assets" Text="" />
+                            <TextBlock VerticalAlignment="Center" Text="Settings" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </SplitView.Pane>
+            <SplitView.Content>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollMode="Disabled">
+                    <Grid>
+                        <Grid.DataContext>
+                            <markup:FromJson>
+                                <markup:FromJson.Source><![CDATA[
+                  {
+                    "PLCTypes": ["Siemens S7-1200", "Allen-Bradley CompactLogix", "Mitsubishi FX5U", "Schneider Modicon M241", "Omron NJ Series"],
+                    "SelectedPLC": "Siemens S7-1200",
+                    "IPAddress": "192.168.1.100",
+                    "Port": 102,
+                    "Timeout": 5000
+                  }
+                  ]]></markup:FromJson.Source>
+                            </markup:FromJson>
+                        </Grid.DataContext>
+                        <Border Translation="0,0,32" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                MaxWidth="560" Padding="48,40" CornerRadius="4" BorderThickness="1"
+                                BorderBrush="{StaticResource BrushOutline}" Background="{StaticResource BrushSurface}">
+                            <Border.Shadow>
+                                <ThemeShadow />
+                            </Border.Shadow>
+                            <StackPanel>
+                                <TextBlock Margin="0,0,0,32" Foreground="{StaticResource BrushOnSurface}"
+                                           FontWeight="SemiBold" FontSize="28" Text="PLC Connection Setup" />
+                                <StackPanel Margin="0,0,0,20">
+                                    <TextBlock Style="{StaticResource FormLabelStyle}" Text="PLC Type" />
+                                    <ComboBox HorizontalAlignment="Stretch"
+                                              SelectedItem="{Binding SelectedPLC, Mode=TwoWay}"
+                                              ItemsSource="{Binding PLCTypes}"
+                                              Style="{StaticResource EnterpriseComboBoxStyle}" />
+                                </StackPanel>
+                                <StackPanel Margin="0,0,0,20">
+                                    <TextBlock Style="{StaticResource FormLabelStyle}" Text="IP Address" />
+                                    <TextBox PlaceholderText="192.168.1.100" Text="{Binding IPAddress, Mode=TwoWay}"
+                                             Style="{StaticResource EnterpriseTextBoxStyle}" />
+                                </StackPanel>
+                                <StackPanel Margin="0,0,0,20">
+                                    <TextBlock Style="{StaticResource FormLabelStyle}" Text="Port" />
+                                    <NumberBox Maximum="65535" Minimum="1" Value="{Binding Port, Mode=TwoWay}"
+                                               Style="{StaticResource EnterpriseNumberBoxStyle}" />
+                                </StackPanel>
+                                <StackPanel Margin="0,0,0,32">
+                                    <TextBlock Style="{StaticResource FormLabelStyle}" Text="Timeout (ms)" />
+                                    <NumberBox Maximum="60000" Minimum="100" Value="{Binding Timeout, Mode=TwoWay}"
+                                               Style="{StaticResource EnterpriseNumberBoxStyle}" />
+                                </StackPanel>
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <Button Content="Connect PLC" Margin="0,0,12,0"
+                                            Style="{StaticResource SecondaryButtonStyle}" />
+                                    <Button Content="Disconnect PLC" Translation="0,0,8"
+                                            Style="{StaticResource SecondaryButtonStyle}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </ScrollViewer>
+            </SplitView.Content>
+        </SplitView>
+    </Grid>
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <Color x:Key="ColorPrimary">#FF0078D4</Color>
+                    <Color x:Key="ColorSecondary">#FF005A9E</Color>
+                    <Color x:Key="ColorAccent">#FF0078D4</Color>
+                    <Color x:Key="ColorSurface">#FFFFFFFF</Color>
+                    <Color x:Key="ColorBackground">#FFF3F3F3</Color>
+                    <Color x:Key="ColorOnPrimary">#FFFFFFFF</Color>
+                    <Color x:Key="ColorOnSurface">#FF323130</Color>
+                    <Color x:Key="ColorOnBackground">#FF323130</Color>
+                    <Color x:Key="ColorOutline">#FFE1E1E1</Color>
+                    <Color x:Key="ColorNavBackground">#FFF8F8F8</Color>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <Color x:Key="ColorPrimary">#FF0078D4</Color>
+                    <Color x:Key="ColorSecondary">#FF005A9E</Color>
+                    <Color x:Key="ColorAccent">#FF0078D4</Color>
+                    <Color x:Key="ColorSurface">#FF2B2B2B</Color>
+                    <Color x:Key="ColorBackground">#FF1F1F1F</Color>
+                    <Color x:Key="ColorOnPrimary">#FFFFFFFF</Color>
+                    <Color x:Key="ColorOnSurface">#FFFFFFFF</Color>
+                    <Color x:Key="ColorOnBackground">#FFFFFFFF</Color>
+                    <Color x:Key="ColorOutline">#FF3F3F3F</Color>
+                    <Color x:Key="ColorNavBackground">#FF252525</Color>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+            <SolidColorBrush x:Key="BrushPrimary" Color="{ThemeResource ColorPrimary}" />
+            <SolidColorBrush x:Key="BrushSecondary" Color="{ThemeResource ColorSecondary}" />
+            <SolidColorBrush x:Key="BrushAccent" Color="{ThemeResource ColorAccent}" />
+            <SolidColorBrush x:Key="BrushSurface" Color="{ThemeResource ColorSurface}" />
+            <SolidColorBrush x:Key="BrushBackground" Color="{ThemeResource ColorBackground}" />
+            <SolidColorBrush x:Key="BrushOnPrimary" Color="{ThemeResource ColorOnPrimary}" />
+            <SolidColorBrush x:Key="BrushOnSurface" Color="{ThemeResource ColorOnSurface}" />
+            <SolidColorBrush x:Key="BrushOnBackground" Color="{ThemeResource ColorOnBackground}" />
+            <SolidColorBrush x:Key="BrushOutline" Color="{ThemeResource ColorOutline}" />
+            <SolidColorBrush x:Key="BrushNavBackground" Color="{ThemeResource ColorNavBackground}" />
+            <Style x:Key="NavButtonStyle" TargetType="Button">
+                <Style.Setters>
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Foreground" Value="{StaticResource BrushOnSurface}" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                    <Setter Property="Padding" Value="16,12" />
+                    <Setter Property="Height" Value="48" />
+                    <Setter Property="FontSize" Value="14" />
+                </Style.Setters>
+            </Style>
+            <Style x:Key="FormLabelStyle" TargetType="TextBlock">
+                <Style.Setters>
+                    <Setter Property="Foreground" Value="{StaticResource BrushOnSurface}" />
+                    <Setter Property="FontSize" Value="13" />
+                    <Setter Property="FontWeight" Value="SemiBold" />
+                    <Setter Property="Margin" Value="0,0,0,6" />
+                </Style.Setters>
+            </Style>
+            <Style x:Key="EnterpriseTextBoxStyle" TargetType="TextBox">
+                <Style.Setters>
+                    <Setter Property="BorderBrush" Value="{StaticResource BrushOutline}" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="CornerRadius" Value="2" />
+                    <Setter Property="Padding" Value="10,7" />
+                    <Setter Property="Height" Value="32" />
+                </Style.Setters>
+            </Style>
+            <Style x:Key="EnterpriseComboBoxStyle" TargetType="ComboBox">
+                <Style.Setters>
+                    <Setter Property="BorderBrush" Value="{StaticResource BrushOutline}" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="CornerRadius" Value="2" />
+                    <Setter Property="Padding" Value="10,7" />
+                    <Setter Property="Height" Value="32" />
+                </Style.Setters>
+            </Style>
+            <Style x:Key="EnterpriseNumberBoxStyle" TargetType="NumberBox">
+                <Style.Setters>
+                    <Setter Property="BorderBrush" Value="{StaticResource BrushOutline}" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="CornerRadius" Value="2" />
+                    <Setter Property="Height" Value="32" />
+                    <Setter Property="SpinButtonPlacementMode" Value="Inline" />
+                </Style.Setters>
+            </Style>
+            <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+                <Style.Setters>
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Foreground" Value="{StaticResource BrushOnPrimary}" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="CornerRadius" Value="2" />
+                    <Setter Property="Padding" Value="28,8" />
+                    <Setter Property="Height" Value="32" />
+                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="FontWeight" Value="SemiBold" />
+                    <Setter Property="MinWidth" Value="120" />
+                </Style.Setters>
+            </Style>
+            <Style x:Key="SecondaryButtonStyle" TargetType="Button">
+                <Style.Setters>
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Foreground" Value="{StaticResource BrushPrimary}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource BrushOutline}" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="CornerRadius" Value="2" />
+                    <Setter Property="Padding" Value="28,8" />
+                    <Setter Property="Height" Value="32" />
+                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="MinWidth" Value="120" />
+                </Style.Setters>
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
+</Page>
